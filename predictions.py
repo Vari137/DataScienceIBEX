@@ -6,10 +6,35 @@ from torch.utils.data import Dataset, DataLoader
 import torch.nn as nn
 import matplotlib.pyplot as plt
 
+# Load and prepare data
+try:
+    def process_data(file_path):
+        # Read CSV and select columns 1-4 (skip date column 0)
+        df = pd.read_csv(file_path)
+        numeric_columns = df.iloc[:, 1:5]  # Get columns 1,2,3,4
+        
+        # Convert string numbers to float
+        for col in numeric_columns.columns:
+            numeric_columns[col] = (numeric_columns[col].astype(str)
+                                  .str.replace('.', '')
+                                  .str.replace(',', '.')
+                                  .astype(float))
+        return numeric_columns
+
+    train_data = process_data('datos_entrenamiento.csv')
+    val_data = process_data('datos_validacion.csv')
+    
+except Exception as e:
+    print(f"Error loading/processing data: {e}")
+    exit()
+
+# Debug print
+print("Available columns in training data:", train_data.columns.tolist())
+
 # Custom dataset class
 class StockDataset(Dataset):
     def __init__(self, data, sequence_length=10):
-        self.data = torch.FloatTensor(data[['opening', 'close', 'max', 'min']].values)
+        self.data = torch.FloatTensor(data.values.astype(np.float32))
         self.sequence_length = sequence_length
         
     def __len__(self):
@@ -30,10 +55,6 @@ class StockPredictor(nn.Sequential):
             nn.ReLU(),
             nn.Linear(32, 4)    # 4 output features
         )
-
-# Load and prepare data
-train_data = pd.read_csv('datos_entrenamiento.csv')
-val_data = pd.read_csv('datos_validacion.csv')
 
 # Create datasets and dataloaders
 train_dataset = StockDataset(train_data)
