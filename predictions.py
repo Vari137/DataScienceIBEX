@@ -2,15 +2,18 @@ import torch
 import pandas as pd
 import numpy as np
 from torch.utils.data import Dataset, DataLoader
+from matplotlib.dates import DateFormatter
 
 import torch.nn as nn
 import matplotlib.pyplot as plt
 
+
 # Load and prepare data
 try:
     def process_data(file_path):
-        # Read CSV and select columns 1-4 (skip date column 0)
+        # Read CSV and parse dates
         df = pd.read_csv(file_path)
+        dates = pd.to_datetime(df.iloc[:, 0], format='%d.%m.%Y')
         numeric_columns = df.iloc[:, 1:5]  # Get columns 1,2,3,4
         
         # Convert string numbers to float
@@ -19,10 +22,10 @@ try:
                                   .str.replace('.', '')
                                   .str.replace(',', '.')
                                   .astype(float))
-        return numeric_columns
+        return numeric_columns, dates
 
-    train_data = process_data('datos_entrenamiento.csv')
-    val_data = process_data('datos_validacion.csv')
+    train_data, train_dates = process_data('datos_entrenamiento.csv')
+    val_data, val_dates = process_data('datos_validacion.csv')
     
 except Exception as e:
     print(f"Error loading/processing data: {e}")
@@ -85,6 +88,7 @@ for epoch in range(num_epochs):
 model.eval()
 predictions = []
 actual_values = []
+prediction_dates = val_dates[10:]  # Skip first 10 dates due to sequence_length
 
 with torch.no_grad():
     for x, y in val_loader:
@@ -96,16 +100,21 @@ with torch.no_grad():
 predictions = np.array(predictions).reshape(-1, 4)
 actual_values = np.array(actual_values).reshape(-1, 4)
 
-# Plot results
+# Plot results with dates
 features = ['Opening', 'Close', 'Max', 'Min']
 fig, axes = plt.subplots(2, 2, figsize=(15, 10))
 axes = axes.ravel()
 
 for idx, feature in enumerate(features):
-    axes[idx].plot(actual_values[:, idx], label='Actual')
-    axes[idx].plot(predictions[:, idx], label='Predicted')
+    axes[idx].plot(prediction_dates, actual_values[:, idx], label='Actual')
+    axes[idx].plot(prediction_dates, predictions[:, idx], label='Predicted')
     axes[idx].set_title(feature)
     axes[idx].legend()
+    # Rotate x-axis labels for better readability
+    axes[idx].tick_params(axis='x', rotation=45)
+    # Format x-axis to show only day and month
+    axes[idx].xaxis.set_major_formatter(DateFormatter('%d.%m.%y'))
 
 plt.tight_layout()
 plt.show()
+
