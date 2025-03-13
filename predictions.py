@@ -100,21 +100,48 @@ with torch.no_grad():
 predictions = np.array(predictions).reshape(-1, 4)
 actual_values = np.array(actual_values).reshape(-1, 4)
 
-# Plot results with dates
+# Create two separate figures
+# Figure 1: Original validation plots
 features = ['Opening', 'Close', 'Max', 'Min']
-fig, axes = plt.subplots(2, 2, figsize=(15, 10))
-axes = axes.ravel()
+fig1, axes1 = plt.subplots(2, 2, figsize=(15, 10))
+axes1 = axes1.ravel()
 
 for idx, feature in enumerate(features):
-    axes[idx].plot(prediction_dates, actual_values[:, idx], label='Actual')
-    axes[idx].plot(prediction_dates, predictions[:, idx], label='Predicted')
-    axes[idx].set_title(feature)
-    axes[idx].legend()
-    # Rotate x-axis labels for better readability
-    axes[idx].tick_params(axis='x', rotation=45)
-    # Format x-axis to show only day and month
-    axes[idx].xaxis.set_major_formatter(DateFormatter('%d.%m.%y'))
+    axes1[idx].plot(prediction_dates, actual_values[:, idx], label='Actual')
+    axes1[idx].plot(prediction_dates, predictions[:, idx], label='Predicted')
+    axes1[idx].set_title(f'Validation Period - {feature}')
+    axes1[idx].legend()
+    axes1[idx].tick_params(axis='x', rotation=45)
+    axes1[idx].xaxis.set_major_formatter(DateFormatter('%d.%m.%y'))
 
+plt.figure(1)
+plt.tight_layout()
+
+# Figure 2: Historical + Validation comparison
+fig2, axes2 = plt.subplots(2, 2, figsize=(15, 10))
+axes2 = axes2.ravel()
+
+for idx, feature in enumerate(features):
+    # Plot historical data (2010-2022)
+    axes2[idx].plot(train_dates, train_data.iloc[:, idx], 
+                   'b-', label='Historical (2010-2022)')
+    
+    # Plot validation period (2022-2024)
+    axes2[idx].plot(prediction_dates, actual_values[:, idx], 
+                   'g-', label='Actual (2022-2024)')
+    axes2[idx].plot(prediction_dates, predictions[:, idx], 
+                   'r--', label='Predicted (2022-2024)')
+    
+    axes2[idx].set_title(f'Historical + Validation - {feature}')
+    axes2[idx].legend()
+    axes2[idx].tick_params(axis='x', rotation=45)
+    axes2[idx].xaxis.set_major_formatter(DateFormatter('%y'))
+    
+    # Add vertical line at the transition point
+    axes2[idx].axvline(x=train_dates.iloc[-1], color='gray', 
+                      linestyle='--', alpha=0.5)
+
+plt.figure(2)
 plt.tight_layout()
 plt.show()
 
