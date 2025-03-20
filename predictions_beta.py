@@ -151,8 +151,6 @@ returns = []
 for i in range(len(predictions) - 1):
     if predictions[i, 1] < predictions[i + 1, 1]:  # Buy if predicted close is higher
         returns.append(actual_values[i + 1, 1] / actual_values[i, 1] - 1)
-    else:  # Sell if predicted close is lower
-        returns.append(actual_values[i + 1, 1] / actual_values[i, 1] - 1)
 
 # Calculate cumulative returns
 cumulative_returns = [1]
