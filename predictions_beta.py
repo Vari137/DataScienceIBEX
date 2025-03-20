@@ -145,3 +145,24 @@ for idx, feature in enumerate(features):
 plt.figure(2)
 plt.tight_layout()
 plt.show()
+# ...
+# Calculate returns
+returns = []
+for i in range(len(predictions) - 1):
+    if predictions[i, 1] < predictions[i + 1, 1]:  # Buy if predicted close is higher
+        returns.append(actual_values[i + 1, 1] / actual_values[i, 1] - 1)
+    else:  # Sell if predicted close is lower
+        returns.append(actual_values[i + 1, 1] / actual_values[i, 1] - 1)
+
+# Calculate cumulative returns
+cumulative_returns = [1]
+for ret in returns:
+    cumulative_returns.append(cumulative_returns[-1] * (1 + ret))
+
+# Plot returns graph
+plt.figure(figsize=(12, 6))
+plt.plot(cumulative_returns)
+plt.title('Cumulative Returns')
+plt.xlabel('Days')
+plt.ylabel('Return')
+plt.show()
