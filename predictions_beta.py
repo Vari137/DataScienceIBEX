@@ -109,7 +109,7 @@ axes1 = axes1.ravel()
 
 for idx, feature in enumerate(features):
     axes1[idx].plot(prediction_dates, actual_values[:, idx], label='Actual')
-    axes1[idx].plot(prediction_dates, predictions[:, idx], label='Predicted')
+    #axes1[idx].plot(prediction_dates, predictions[:, idx], label='Predicted')
     
     # Find local maximum and minimums
     diff = np.diff(predictions[:, idx])
@@ -117,9 +117,9 @@ for idx, feature in enumerate(features):
     min_idx = np.where((diff[:-1] < 0) & (diff[1:] > 0))[0] + 1
     
     # Plot local maximum and minimums as buy and sell signals
-    axes1[idx].scatter(prediction_dates.iloc[max_idx], predictions[max_idx, idx], label='Sell', color='r', marker='v')
-    axes1[idx].scatter(prediction_dates.iloc[min_idx], predictions[min_idx, idx], label='Buy', color='g', marker='^')
-    
+    axes1[idx].scatter(prediction_dates.iloc[max_idx], actual_values[max_idx, idx], label='Sell', color='r', marker='v')
+    axes1[idx].scatter(prediction_dates.iloc[min_idx], actual_values[min_idx, idx], label='Buy', color='g', marker='^')
+        
     axes1[idx].set_title(f'Validation Period - {feature}')
     axes1[idx].legend()
     axes1[idx].tick_params(axis='x', rotation=45)
