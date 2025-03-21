@@ -62,7 +62,7 @@ class StockPredictor(nn.Sequential):
 # Create datasets and dataloaders
 train_dataset = StockDataset(train_data)
 val_dataset = StockDataset(val_data)
-train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+train_loader = DataLoader(train_dataset, batch_size=32, shuffle=False)
 val_loader = DataLoader(val_dataset, batch_size=1, shuffle=False)
 
 # Initialize model, loss function and optimizer
