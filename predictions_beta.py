@@ -128,6 +128,26 @@ for idx, feature in enumerate(features):
 plt.figure(1)
 plt.tight_layout()
 
+# Calculate cumulative returns
+cumulative_returns = [1.0]
+buy_signals = prediction_dates.iloc[min_idx]
+sell_signals = prediction_dates.iloc[max_idx]
+
+for i in range(len(buy_signals) - 1):
+    buy_price = actual_values[min_idx[i], 0]  # Buy at opening price
+    sell_price = actual_values[max_idx[i], 0] 
+    return_val = sell_price / buy_price
+    cumulative_returns.append(cumulative_returns[-1] * return_val)
+
+# Plot cumulative returns
+plt.figure(figsize=(12, 6))
+plt.plot(cumulative_returns)
+plt.title('Cumulative Returns')
+plt.xlabel('Time')
+plt.ylabel('Return')
+plt.show()
+
+
 # Figure 2: Historical + Validation comparison
 fig2, axes2 = plt.subplots(2, 2, figsize=(15, 10))
 axes2 = axes2.ravel()
@@ -152,6 +172,5 @@ for idx, feature in enumerate(features):
     axes2[idx].axvline(x=train_dates.iloc[-1], color='gray', 
                       linestyle='--', alpha=0.5)
 
-plt.figure(2)
 plt.tight_layout()
 plt.show()

@@ -14,3 +14,5 @@
 
 
 4. awesome, using the data from the model (and just the data from the model) tell me the cumulative returns I would have had if I had bought where  the function has a minimum (the value for n-1>n<n+1) and sells at maximums, that is, you have the model, say I use that little algorithm of buying low and selling high, which returns I would have compared to what really happened?
+
+5. using a RELU with ADAM two layers MSE neural network usign torch 100 epochs, download data from the ibex 2010-2024 use 2010-2020 as training 2020-2024 as validation, input parameters are  open close high and low from the last 10 days and output should be the expected open close high low the next day, use 40;64 64:32 32:4 as values for the neural network. Plot everything (model training validation comparision)
