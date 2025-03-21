@@ -110,6 +110,16 @@ axes1 = axes1.ravel()
 for idx, feature in enumerate(features):
     axes1[idx].plot(prediction_dates, actual_values[:, idx], label='Actual')
     axes1[idx].plot(prediction_dates, predictions[:, idx], label='Predicted')
+    
+    # Find local maximum and minimums
+    diff = np.diff(predictions[:, idx])
+    max_idx = np.where((diff[:-1] > 0) & (diff[1:] < 0))[0] + 1
+    min_idx = np.where((diff[:-1] < 0) & (diff[1:] > 0))[0] + 1
+    
+    # Plot local maximum and minimums as buy and sell signals
+    axes1[idx].scatter(prediction_dates.iloc[max_idx], predictions[max_idx, idx], label='Sell', color='r', marker='v')
+    axes1[idx].scatter(prediction_dates.iloc[min_idx], predictions[min_idx, idx], label='Buy', color='g', marker='^')
+    
     axes1[idx].set_title(f'Validation Period - {feature}')
     axes1[idx].legend()
     axes1[idx].tick_params(axis='x', rotation=45)
@@ -144,23 +154,4 @@ for idx, feature in enumerate(features):
 
 plt.figure(2)
 plt.tight_layout()
-plt.show()
-# ...
-# Calculate returns
-returns = []
-for i in range(len(predictions) - 1):
-    if predictions[i, 1] < predictions[i + 1, 1]:  # Buy if predicted close is higher
-        returns.append(actual_values[i + 1, 1] / actual_values[i, 1] - 1)
-
-# Calculate cumulative returns
-cumulative_returns = [1]
-for ret in returns:
-    cumulative_returns.append(cumulative_returns[-1] * (1 + ret))
-
-# Plot returns graph
-plt.figure(figsize=(12, 6))
-plt.plot(cumulative_returns)
-plt.title('Cumulative Returns')
-plt.xlabel('Days')
-plt.ylabel('Return')
 plt.show()
