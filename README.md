@@ -1,3 +1,12 @@
+Este software está diseñado para tratar de predecir el comportamiento de Stocks empleando una red neuronal y calcular el beneficio esperado del modelo. Se trata de un estudio preliminar que emplea redes neuronales clásicas. La implementación de otros modelos más apropiados (como LSTM) se ha considerado, sin embargo, se ha preferido desarrollar un frontend para que el proyecto sea más visual en lugar de tratar de mejorar el funcionamiento del mismo. 
+
+## Modo de empleo
+
+1. Correr server.py para encender el servidor
+2. Ir a localhost:500 que es donde se hostea (no lo hemos subido a la web).
+3. Seleccionar el Ticket que se quiere ver
+4. Según si ya está guardado o no, el software bien muestra los resultados o los calcula en el momento. Para poder visualizar ambos comportamientos de forma sencilla los datos del IBEX, SP500 y Meta ya se encuentran calculados mientras que el resto se hacen en el momento.
+
 ## Componentes del Proyecto
 
 ### 1. Interfaz Web (website.html)
