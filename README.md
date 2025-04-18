@@ -14,3 +14,5 @@
 5. Using a RELU with ADAM two layers MSE neural network usign torch 100 epochs, download data from the ibex 2010-2024 use 2010-2020 as training 2020-2024 as validation, input parameters are  open close high and low from the last 10 days and output should be the expected open close high low the next day, use 40;64 64:32 32:4 as values for the neural network. Plot everything (model training validation comparision)
 
 6. create a website that runs the code in predictions_yf with the ticket you choose (via a menu that lets you choose between ibex, sp500 and the top 10 stocks in the sp500)and shows you the plot in a neat way, make sure it has a good interface for changing and that it saves the files that are already generated. It should also let you provide a custom ticket (the string in the ticket variable), first check if that has been calculated (if it has the plots will already be in this folder in .png files starting with the ticket name)
+
+5. Create a server that runs this website and, when a plot is not found runs predictions_yf.py for that ticket, this will create the plots and thus, once that code is done, show theme in the website

@@ -105,7 +105,7 @@
 
         function loadPlots(tickets) {
             const plotArea = document.getElementById('plotArea');
-            plotArea.innerHTML = '';
+            plotArea.innerHTML = 'Loading plots...';
             
             tickets.forEach(ticket => {
                 const plots = [
@@ -114,11 +114,18 @@
                     `plots/${ticket}_cumulative_returns.png`,
                 ];
 
+                plotArea.innerHTML = '';
                 plots.forEach(plot => {
                     const img = document.createElement('img');
                     img.src = plot;
                     img.className = 'plot-image';
-                    img.onerror = () => showError(`Plot not found for ${ticket}`);
+                    img.onerror = () => {
+                        showError(`Generating plots for ${ticket}... Please wait.`);
+                        // Retry loading the image after a delay
+                        setTimeout(() => {
+                            img.src = plot + '?' + new Date().getTime();
+                        }, 5000);
+                    };
                     img.onload = () => hideError();
                     plotArea.appendChild(img);
                 });
@@ -137,4 +144,3 @@
     </script>
 </body>
 </html>
-
