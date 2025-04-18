@@ -138,12 +138,12 @@ for i in range(len(buy_signals) - 1):
     cumulative_returns.append(cumulative_returns[-1] * return_val)
 
 # Plot cumulative returns
-plt.figure(figsize=(12, 6))
+fig3 = plt.figure(figsize=(12, 6))
 plt.plot(cumulative_returns)
 plt.title('Cumulative Returns')
 plt.xlabel('Time')
 plt.ylabel('Return')
-plt.show()
+plt.tight_layout()
 
 # Figure 2: Historical + Validation comparison
 fig2, axes2 = plt.subplots(2, 2, figsize=(15, 10))
@@ -174,7 +174,6 @@ plt.show()
 
 # Save plots as PNGs
 fig1.savefig(f'{ticket}_validation_period_plots.png', format='png', bbox_inches='tight')
-plt.figure(2)
-plt.savefig(f'{ticket}_cumulative_returns.png', format='png', bbox_inches='tight')
+fig3.savefig(f'{ticket}_cumulative_returns.png', format='png', bbox_inches='tight')
 fig2.savefig(f'{ticket}_historical_validation_comparison.png', format='png', bbox_inches='tight')
 
