@@ -173,7 +173,7 @@ plt.tight_layout()
 plt.show()
 
 # Save plots as PNGs
-fig1.savefig(f'{ticket}_validation_period_plots.png', format='png', bbox_inches='tight')
-fig3.savefig(f'{ticket}_cumulative_returns.png', format='png', bbox_inches='tight')
-fig2.savefig(f'{ticket}_historical_validation_comparison.png', format='png', bbox_inches='tight')
+fig1.savefig(f'plots/{ticket}_validation_period_plots.png', format='png', bbox_inches='tight')
+fig3.savefig(f'plots/{ticket}_cumulative_returns.png', format='png', bbox_inches='tight')
+fig2.savefig(f'plots/{ticket}_historical_validation_comparison.png', format='png', bbox_inches='tight')
 

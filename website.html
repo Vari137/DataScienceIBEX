@@ -76,8 +76,8 @@
             </select>
 
             <div>
-                <input type="text" id="customTicker" placeholder="Enter custom ticker">
-                <button onclick="loadCustomTicker()">Load Custom Ticker</button>
+                <input type="text" id="customTicket" placeholder="Enter custom ticket">
+                <button onclick="loadCustomTicker()">Load Custom Ticket</button>
             </div>
         </div>
 
@@ -95,30 +95,30 @@
         });
 
         function loadCustomTicker() {
-            const ticker = document.getElementById('customTicker').value.trim().toUpperCase();
-            if (!ticker) {
-                showError('Please enter a valid ticker');
+            const ticket = document.getElementById('customTicket').value.trim().toUpperCase();
+            if (!ticket) {
+                showError('Please enter a valid ticket');
                 return;
             }
-            loadPlots([ticker]);
+            loadPlots([ticket]);
         }
 
-        function loadPlots(tickers) {
+        function loadPlots(tickets) {
             const plotArea = document.getElementById('plotArea');
             plotArea.innerHTML = '';
             
-            tickers.forEach(ticker => {
+            tickets.forEach(ticket => {
                 const plots = [
-                    `${ticker}_historical_validation_comparison.png`,
-                    `${ticker}_validation_period_plots.png`,
-                    `${ticker}_cumulative_returns.png`,
+                    `plots/${ticket}_historical_validation_comparison.png`,
+                    `plots/${ticket}_validation_period_plots.png`,
+                    `plots/${ticket}_cumulative_returns.png`,
                 ];
 
                 plots.forEach(plot => {
                     const img = document.createElement('img');
                     img.src = plot;
                     img.className = 'plot-image';
-                    img.onerror = () => showError(`Plot not found for ${ticker}`);
+                    img.onerror = () => showError(`Plot not found for ${ticket}`);
                     img.onload = () => hideError();
                     plotArea.appendChild(img);
                 });
@@ -137,3 +137,4 @@
     </script>
 </body>
 </html>
+
