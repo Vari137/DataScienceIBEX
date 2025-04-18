@@ -96,6 +96,9 @@ with torch.no_grad():
 
 predictions = np.array(predictions).reshape(-1, 4)
 actual_values = np.array(actual_values).reshape(-1, 4)
+# Export model
+torch.save(model.state_dict(), 'stock_predictor.pth')
+
 
 # Create two separate figures
 # Figure 1: Original validation plots
