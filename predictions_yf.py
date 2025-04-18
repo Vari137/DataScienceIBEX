@@ -19,11 +19,11 @@ def process_data_yahoo(ticker, start_date, end_date):
     numeric_columns = df[['Open', 'High', 'Low', 'Close']].copy()
     return numeric_columns, dates
 
-
+ticket = '^IBEX'
 # Train and validation data
 try:
-    train_data, train_dates = process_data_yahoo('^IBEX', '2010-01-01', '2022-12-31')
-    val_data, val_dates = process_data_yahoo('^IBEX', '2023-01-01', '2024-12-31')
+    train_data, train_dates = process_data_yahoo(ticket, '2010-01-01', '2022-12-31')
+    val_data, val_dates = process_data_yahoo(ticket, '2023-01-01', '2024-12-31')
 except Exception as e:
     print(f"Error fetching/processing data: {e}")
     exit()
@@ -171,3 +171,10 @@ for idx, feature in enumerate(features):
 
 plt.tight_layout()
 plt.show()
+
+# Save plots as PNGs
+fig1.savefig(f'{ticket}_validation_period_plots.png', format='png', bbox_inches='tight')
+plt.figure(2)
+plt.savefig(f'{ticket}_cumulative_returns.png', format='png', bbox_inches='tight')
+fig2.savefig(f'{ticket}_historical_validation_comparison.png', format='png', bbox_inches='tight')
+
