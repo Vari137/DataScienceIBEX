@@ -4,8 +4,8 @@ Este software está diseñado para tratar de predecir el comportamiento de Stock
 
 1. Correr server.py para encender el servidor
 2. Ir a localhost:500 que es donde se hostea (no lo hemos subido a la web).
-3. Seleccionar el Ticket que se quiere ver
-4. Según si ya está guardado o no, el software bien muestra los resultados o los calcula en el momento. Para poder visualizar ambos comportamientos de forma sencilla los datos del IBEX, SP500 y Meta ya se encuentran calculados mientras que el resto se hacen en el momento.
+3. Seleccionar el Ticket que se quiere ver. Hay que asegurarse de que el ticket puesto es tal y cómo se indica en Yahoo Finance puesto que actualmente no hay error handling para tickets inválidos en el frontend (puede verse en la consola).
+4. Según si ya está guardado o no, el software bien muestra los resultados o los calcula en el momento. Para poder visualizar ambos comportamientos de forma sencilla, los datos del IBEX, SP500 y Meta del desplegable así como IBE.MC (Iberdrola) como ticket custom ya se encuentran calculados mientras que el resto se hacen en el momento, esto lleva un tiempo no superior a 1 minuto.
 
 ## Componentes del Proyecto
 
