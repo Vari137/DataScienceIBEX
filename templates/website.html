@@ -50,6 +50,17 @@
             padding: 10px;
             display: none;
         }
+        .progress-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
@@ -83,6 +94,13 @@
 
         <div id="error" class="error"></div>
         <div id="plotArea"></div>
+    </div>
+
+    <div id="progress-container" style="display: none;">
+        <div class="progress-box">
+            <h3>Generating Predictions</h3>
+            <p id="progress-status">Processing...</p>
+        </div>
     </div>
 
     <script>
@@ -141,6 +159,33 @@
         function hideError() {
             document.getElementById('error').style.display = 'none';
         }
+
+        function checkProgress() {
+            fetch('/progress')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('progress-container');
+                    const status = document.getElementById('progress-status');
+                    
+                    if (data.running) {
+                        container.style.display = 'block';
+                        status.textContent = `Processing ${data.ticker}: ${data.status}`;
+                    } else {
+                        container.style.display = 'none';
+                        // If was previously showing progress, reload the plots
+                        if (container.style.display === 'block') {
+                            location.reload();
+                        }
+                    }
+                });
+        }
+
+        // Check progress every 2 seconds while visible
+        setInterval(() => {
+            if (document.visibilityState === 'visible') {
+                checkProgress();
+            }
+        }, 2000);
     </script>
 </body>
 </html>
