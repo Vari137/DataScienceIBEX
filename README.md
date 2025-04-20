@@ -1,3 +1,5 @@
+## Trabajo Álvaro Fernández y Pablo Gómez
+
 Este software está diseñado para tratar de predecir el comportamiento de Stocks empleando una red neuronal y calcular el beneficio esperado del modelo. Se trata de un estudio preliminar que emplea redes neuronales clásicas. La implementación de otros modelos más apropiados (como LSTM) se ha considerado, sin embargo, se ha preferido desarrollar un frontend para que el proyecto sea más visual en lugar de tratar de mejorar el funcionamiento del mismo. 
 
 ## Modo de empleo
